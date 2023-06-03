@@ -7,11 +7,14 @@ import Home from './components/Home';
 import UserForm from './components/UserForm';
 import GitHub from './components/Github';
 
-function App() {
+const App = () =>{
+  // const username = UserForm.username;
+
   return (
     <div>
       <NavBar/>
       <div>
+      {/* <GitHub username={username}/> */}
         <Router>
         <Routes>
           <Route path='/' element={<Home/>} exact/>

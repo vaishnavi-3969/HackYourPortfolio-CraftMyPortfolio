@@ -3,6 +3,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
 import Parrot from '../assets/parrot.png';
+import CongratsAnimation from './CongratsAnimation';
+
 
 const firebaseConfig = {
     apiKey: process.env.apiKey,
@@ -26,7 +28,8 @@ const UserForm = () => {
     const [techStackInput, setTechStackInput] = useState('');
     const [name, setName] = useState('');
     const [isEditMode, setIsEditMode] = useState(false);
-  
+    const [showCongrats, setShowCongrats] = useState(false);
+
     useEffect(() => {
       if (user) {
         fetchUserProfile();
@@ -79,7 +82,9 @@ const UserForm = () => {
         });
   
         console.log('New profile added');
+        alert('Congratulations! Your profile has been created/updated.');
       }
+      setShowCongrats(true);
     };
   
     const handleAddTechStack = () => {
@@ -181,6 +186,11 @@ const UserForm = () => {
             <div>Please log in to access the form.</div>
           )}
         </div>
+        {showCongrats && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50">
+          <CongratsAnimation />
+        </div>
+      )}
       </div>
     );
   };

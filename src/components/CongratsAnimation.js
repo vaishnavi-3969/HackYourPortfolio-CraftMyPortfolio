@@ -3,25 +3,25 @@ import Confetti from 'react-confetti';
 
 const CongratsAnimation = ({ onAnimationComplete }) => {
   useEffect(() => {
-    const animationDuration = 5000; // Duration of the animation in milliseconds
-
+    const animationDuration = 5000;
     const timer = setTimeout(() => {
-      onAnimationComplete();
+    //   onAnimationComplete();
     }, animationDuration);
 
     return () => clearTimeout(timer);
   }, [onAnimationComplete]);
 
   return (
-    <div className="congrats-animation-container">
-      <Confetti
-        width={window.innerWidth}
-        height={window.innerHeight}
-        recycle={false} // Disables confetti recycling for continuous effect
-      />
-      <h2>Congratulations on creating your account!</h2>
-      <p>Enjoy your journey on Craft My Portfolio!</p>
-    </div>
+    <div className="congrats-animation-container text-white text-center">
+    <Confetti width={window.innerWidth} height={window.innerHeight} recycle={true} />
+    <h2 className="text-4xl font-bold mb-4">Congratulations on creating your account!</h2>
+    <p className="text-lg">Enjoy your journey on Craft My Portfolio!</p>
+    <button className="mt-8 px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <a href="/github" className="text-white">
+        Proceed
+      </a>
+    </button>
+  </div>
   );
 };
 
