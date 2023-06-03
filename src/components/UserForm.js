@@ -33,14 +33,9 @@ const UserForm = () => {
       username,
       name,
       briefBio,
+      email:user.email,
       techStack,
     });
-
-    console.log('Form submitted');
-    console.log('Username:', username);
-    console.log('Name:', user.name);
-    console.log('Brief Bio:', briefBio);
-    console.log('Tech Stack:', techStack.join(', '));
     console.log('Document written with ID: ', docRef.id);
     
   };
