@@ -16,6 +16,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>} exact/>
           <Route path='/userform' element={<UserForm/>} exact/>
+          <Route path='/github' element={<GitHub/>} exact/>
           </Routes>
         </Router>
       </div>
