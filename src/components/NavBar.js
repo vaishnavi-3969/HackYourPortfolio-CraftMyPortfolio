@@ -56,6 +56,12 @@ const NavBar = () => {
             >
               Collaborate
             </a>
+            <a
+              href="/learningResources"
+              className="text-white hover:bg-yellow-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+            >
+              Learn
+            </a>
            {isAuthenticated && (
               <p>
                 <a
