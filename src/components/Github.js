@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { formatDistanceToNow } from 'date-fns';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 
-const GitHub = () => {
+const GitHub = ({githuUserName}) => {
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
   const [repoData, setRepoData] = useState([]);
-
+  const [shareableLink, setShareableLink] = useState('');
   const handleChange = (event) => {
     setUsername(event.target.value);
   };
@@ -40,7 +40,7 @@ const GitHub = () => {
 
   const renderRepoCards = () => {
     return repoData.map((repo) => (
-      <div className="bg-white rounded-md shadow-md p-4 mb-4" key={repo.id}>
+      <div className="max-w-3xl mx-auto bg-white rounded-md shadow-md p-4 mb-4" key={repo.id}>
         <h4 className="text-xl font-semibold mb-2">{repo.name}</h4>
         <p className="text-gray-500">{repo.description}</p>
         <div className="flex justify-between mt-4">
@@ -92,9 +92,119 @@ const GitHub = () => {
     );
   };
 
+  const renderCollaborationChart = () => {
+    const collaboratorsData = repoData.map((repo) => ({
+      name: repo.name,
+      collaborators: repo.collaborators || 0,
+    }));
+
+    return (
+      <div className="bg-white rounded-md shadow-md p-4 mb-4">
+        <h4 className="text-xl font-semibold mb-4">Collaborators per Repository</h4>
+        <BarChart width={600} height={300} data={collaboratorsData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <XAxis dataKey="name" />
+          <YAxis />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="collaborators" fill="#8884d8" />
+        </BarChart>
+      </div>
+    );
+  };
+
+  const renderCommitGraph = () => {
+    const data = [
+      { name: 'Jan', commits: 10 },
+      { name: 'Feb', commits: 8 },
+      { name: 'Mar', commits: 12 },
+      { name: 'Apr', commits: 15 },
+      { name: 'May', commits: 20 },
+      { name: 'Jun', commits: 18 },
+      { name: 'Jul', commits: 25 },
+      { name: 'Aug', commits: 22 },
+      { name: 'Sep', commits: 28 },
+      { name: 'Oct', commits: 30 },
+      { name: 'Nov', commits: 35 },
+      { name: 'Dec', commits: 32 },
+    ];
+
+    return (
+      <div className="bg-white rounded-md shadow-md p-4 mb-4">
+        <h4 className="text-xl font-semibold mb-4">Commits per Month</h4>
+        <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <XAxis dataKey="name" />
+          <YAxis />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="commits" stroke="#8884d8" activeDot={{ r: 8 }} />
+        </LineChart>
+      </div>
+    );
+  };
+
+  const renderTimeSpentChart = () => {
+    const data = [
+      { name: 'Project 1', time: 20 },
+      { name: 'Project 2', time: 25 },
+      { name: 'Project 3', time: 18 },
+      { name: 'Project 4', time: 15 },
+      { name: 'Project 5', time: 22 },
+    ];
+
+    return (
+      <div className="bg-white rounded-md shadow-md p-4 mb-4">
+        <h4 className="text-xl font-semibold mb-4">Time Spent per Project</h4>
+        <BarChart width={600} height={300} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <XAxis dataKey="name" />
+          <YAxis />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="time" fill="#8884d8" />
+        </BarChart>
+      </div>
+    );
+  };
+
+  const renderBadgeChart = () => {
+    const data = [
+      { name: 'Bronze', value: 10 },
+      { name: 'Silver', value: 5 },
+      { name: 'Gold', value: 2 },
+    ];
+
+    const COLORS = ['#FFD700', '#C0C0C0', '#CD7F32'];
+
+    return (
+      <div className="bg-white rounded-md shadow-md p-4 mb-4">
+        <h4 className="text-xl font-semibold mb-4">Badges Earned</h4>
+        <PieChart width={600} height={300}>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            fill="#8884d8"
+            label
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
+      </div>
+    );
+  };
+
   if (!userData) {
     return (
-      <div className="github-portfolio">
+      <div className="github-portfolio mx-auto p-4">
         <h2 className="text-4xl font-bold mb-4">GitHub Portfolio</h2>
         <form onSubmit={handleSubmit} className="mb-4">
           <label className="flex flex-col">
@@ -107,7 +217,10 @@ const GitHub = () => {
               required
             />
           </label>
-          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md">
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md"
+          >
             Fetch Data
           </button>
         </form>
@@ -116,7 +229,7 @@ const GitHub = () => {
   }
 
   return (
-    <div className="github-portfolio">
+    <div className="github-portfolio mx-auto p-4">
       <h2 className="text-4xl font-bold mb-4">GitHub Portfolio</h2>
       <div className="profile mb-8">
         <h3 className="text-2xl font-bold">Profile</h3>
@@ -143,17 +256,31 @@ const GitHub = () => {
           </div>
         </div>
       </div>
-
+      <div className="repositories mb-8">
+        <h3 className="text-2xl font-bold mb-4">Repositories</h3>
+        {renderRepoCards()}
+      </div>
       {repoData.length > 0 && (
-        <>
+        <div className="statistics">
+          <h3 className="text-2xl font-bold mb-4">Statistics</h3>
           {renderCommitChart()}
-          <div className="repositories">
-            <h3 className="text-2xl font-bold">Repositories</h3>
-            {renderRepoCards()}
-          </div>
-        </>
+          {renderCollaborationChart()}
+          {renderCommitGraph()}
+          {renderTimeSpentChart()}
+          {renderBadgeChart()}
+        </div>
       )}
+  
+      <div className="share-button">
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md"
+          
+        >
+          Generate Shareable Link
+        </button>
+        </div>
     </div>
+    
   );
 };
 

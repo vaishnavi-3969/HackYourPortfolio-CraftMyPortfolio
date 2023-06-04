@@ -39,22 +39,22 @@ const NavBar = () => {
               Home
             </a>
             <a
-              href="/"
+              href="/github"
               className="text-white hover:bg-green-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
-              Projects
+            Try Generator
             </a>
             <a
-              href="/"
+              href="/profilesList"
               className="text-white hover:bg-purple-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
-              About
+              Connect
             </a>
             <a
-              href="/"
+              href="/projects"
               className="text-white hover:bg-yellow-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
-              Contact
+              Profile
             </a>
            {isAuthenticated && (
               <p>
