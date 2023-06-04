@@ -58,12 +58,10 @@ const ProfilesList = () => {
   };
 
   const handleMessage = (profile) => {
-    // Handle message action for the profile
     console.log('Messaging', profile.username);
   };
 
   const handleViewProfile = (profile) => {
-    // Handle view profile action for the profile
     console.log('Viewing profile of', profile.username);
   };
 

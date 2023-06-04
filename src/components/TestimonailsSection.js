@@ -32,7 +32,7 @@ const TestimonialsSection = () => {
               <div className="flex items-center">
                 <div className="mr-4">
                   <img
-                    src="url-to-profile-image"
+                    src="https://randomuser.me/api/portraits/men/1.jpg"
                     alt={testimonial.name}
                     className="w-12 h-12 rounded-full"
                   />

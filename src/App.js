@@ -34,7 +34,7 @@ const App = () => {
             <Route path='/profilesList' element={<ProfilesList />} exacat />
             <Route path='/newProjectForm' element={<NewProjectForm/>} exact/>
             <Route path='/learningResources' element={<LearningResources/>} exact/>
-            <Route path='/testimonals' element={<TestimonialsSection/>} exact/>
+            <Route path='/testimonials' element={<TestimonialsSection/>} exact/>
             <Route path='/showcase' element={<PortfolioShowcase/>} exact/>
             <Route path='/progressTracker' element={<ProgressTracker/>} exact/>
             <Route path='/interactiveQuizzes' element={<InteractiveQuizzes/>} exact/>

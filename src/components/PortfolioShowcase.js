@@ -3,26 +3,26 @@ import React from 'react';
 const PortfolioShowcase = () => {
   const projects = [
     {
-      title: 'Project Showcase 1',
+      title: 'Portfolio Showcase Competition 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae lectus vitae turpis fringilla varius.',
-      image: 'https://example.com/project1.jpg',
+      image: 'https://cdn.dribbble.com/users/2489000/screenshots/8842316/dribble_website_4x.jpg',
     },
     {
-      title: 'Project Showcase 2',
+      title: 'Portfolio Showcase Competition 2',
       description: 'Sed eget nunc vestibulum, faucibus turpis vitae, consequat ipsum. Etiam vitae dolor sit amet neque condimentum efficitur.',
-      image: 'https://example.com/project2.jpg',
+      image: 'https://assets.materialup.com/uploads/00fc8380-2bfa-4787-86a6-15df9c0be466/preview.jpg',
     },
     {
-      title: 'Project Showcase 3',
+      title: 'Portfolio Showcase Competition 3',
       description: 'In eu massa dignissim, ullamcorper urna et, congue leo. Sed scelerisque lacus sed justo consectetur auctor.',
-      image: 'https://example.com/project3.jpg',
+      image: 'https://kinsta.com/wp-content/uploads/2019/01/portfolio-website-thumbnail-gallery.jpeg',
     },
   ];
 
   return (
     <div className="bg-gray-100 py-8">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Portfolio Showcase</h2>
+        <h2 className="text-3xl font-bold text-center mb-8">Upcoming Portfolio Showcase Exhibition/Competitions</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg">

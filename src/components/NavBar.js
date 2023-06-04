@@ -58,9 +58,45 @@ const NavBar = () => {
             </a>
             <a
               href="/learningResources"
-              className="text-white hover:bg-yellow-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+              className="text-white hover:bg-blue-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Learn
+            </a>
+            <a
+              href="/testimonials"
+              className="text-white hover:bg-green-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+            >
+              Testimonials
+            </a>
+            <a
+              href="/showcase"
+              className="text-white hover:bg-purple-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+            >
+              Events
+            </a>
+            <a
+              href="/progressTracker"
+              className="text-white hover:bg-yellow-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+            >
+              Progress Tracker
+            </a>
+            <a
+              href="/interactiveQuizzes"
+              className="text-white hover:bg-blue-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+            >
+              Quiz
+            </a>
+            <a
+              href="/resourceLibrary"
+              className="text-white hover:bg-green-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+            >
+              Library
+            </a>
+            <a
+              href="/communityForum"
+              className="text-white hover:bg-purple-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+            >
+              Forum
             </a>
            {isAuthenticated && (
               <p>
