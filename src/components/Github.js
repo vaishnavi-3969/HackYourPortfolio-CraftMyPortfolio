@@ -3,11 +3,12 @@ import axios from 'axios';
 import { formatDistanceToNow } from 'date-fns';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 
-const GitHub = ({githuUserName}) => {
+const GitHub = () => {
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
   const [repoData, setRepoData] = useState([]);
   const [shareableLink, setShareableLink] = useState('');
+
   const handleChange = (event) => {
     setUsername(event.target.value);
   };
@@ -92,195 +93,132 @@ const GitHub = ({githuUserName}) => {
     );
   };
 
-  const renderCollaborationChart = () => {
-    const collaboratorsData = repoData.map((repo) => ({
-      name: repo.name,
-      collaborators: repo.collaborators || 0,
+  const renderLanguageChart = () => {
+    const languageData = repoData.reduce((acc, repo) => {
+      const { language } = repo;
+      if (language) {
+        if (acc[language]) {
+          acc[language]++;
+        } else {
+          acc[language] = 1;
+        }
+      }
+      return acc;
+    }, {});
+
+    const chartData = Object.keys(languageData).map((language) => ({
+      name: language,
+      value: languageData[language],
     }));
 
-    return (
-      <div className="bg-white rounded-md shadow-md p-4 mb-4">
-        <h4 className="text-xl font-semibold mb-4">Collaborators per Repository</h4>
-        <BarChart width={600} height={300} data={collaboratorsData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="collaborators" fill="#8884d8" />
-        </BarChart>
-      </div>
-    );
-  };
-
-  const renderCommitGraph = () => {
-    const data = [
-      { name: 'Jan', commits: 10 },
-      { name: 'Feb', commits: 8 },
-      { name: 'Mar', commits: 12 },
-      { name: 'Apr', commits: 15 },
-      { name: 'May', commits: 20 },
-      { name: 'Jun', commits: 18 },
-      { name: 'Jul', commits: 25 },
-      { name: 'Aug', commits: 22 },
-      { name: 'Sep', commits: 28 },
-      { name: 'Oct', commits: 30 },
-      { name: 'Nov', commits: 35 },
-      { name: 'Dec', commits: 32 },
-    ];
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF00DD'];
 
     return (
       <div className="bg-white rounded-md shadow-md p-4 mb-4">
-        <h4 className="text-xl font-semibold mb-4">Commits per Month</h4>
-        <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="commits" stroke="#8884d8" activeDot={{ r: 8 }} />
-        </LineChart>
-      </div>
-    );
-  };
-
-  const renderTimeSpentChart = () => {
-    const data = [
-      { name: 'Project 1', time: 20 },
-      { name: 'Project 2', time: 25 },
-      { name: 'Project 3', time: 18 },
-      { name: 'Project 4', time: 15 },
-      { name: 'Project 5', time: 22 },
-    ];
-
-    return (
-      <div className="bg-white rounded-md shadow-md p-4 mb-4">
-        <h4 className="text-xl font-semibold mb-4">Time Spent per Project</h4>
-        <BarChart width={600} height={300} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="time" fill="#8884d8" />
-        </BarChart>
-      </div>
-    );
-  };
-
-  const renderBadgeChart = () => {
-    const data = [
-      { name: 'Bronze', value: 10 },
-      { name: 'Silver', value: 5 },
-      { name: 'Gold', value: 2 },
-    ];
-
-    const COLORS = ['#FFD700', '#C0C0C0', '#CD7F32'];
-
-    return (
-      <div className="bg-white rounded-md shadow-md p-4 mb-4">
-        <h4 className="text-xl font-semibold mb-4">Badges Earned</h4>
-        <PieChart width={600} height={300}>
+        <h4 className="text-xl font-semibold mb-4">Languages Used</h4>
+        <PieChart width={400} height={300}>
           <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={100}
+            data={chartData}
+            cx={200}
+            cy={150}
+            labelLine={false}
+            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(2)}%`}
+            outerRadius={80}
             fill="#8884d8"
-            label
           >
-            {data.map((entry, index) => (
+            {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
           <Tooltip />
-          <Legend />
         </PieChart>
       </div>
     );
   };
 
-  if (!userData) {
-    return (
-      <div className="github-portfolio mx-auto p-4">
-        <h2 className="text-4xl font-bold mb-4">GitHub Portfolio</h2>
-        <form onSubmit={handleSubmit} className="mb-4">
-          <label className="flex flex-col">
-            <span className="text-lg font-semibold mb-2">Enter your GitHub username:</span>
-            <input
-              type="text"
-              value={username}
-              onChange={handleChange}
-              className="border rounded-md py-2 px-3"
-              required
-            />
-          </label>
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md"
-          >
-            Fetch Data
-          </button>
-        </form>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const sharedUser = queryParams.get('user');
+    if (sharedUser) {
+      setUsername(sharedUser);
+      fetchGitHubData();
+    }
+  }, []);
+
+  useEffect(() => {
+    const url = `${window.location.origin}${window.location.pathname}?user=${username}`;
+    setShareableLink(url);
+  }, [username]);
 
   return (
     <div className="github-portfolio mx-auto p-4">
-      <h2 className="text-4xl font-bold mb-4">GitHub Portfolio</h2>
-      <div className="profile mb-8">
-        <h3 className="text-2xl font-bold">Profile</h3>
-        <div className="profile-info flex items-center mt-4">
-          <img src={userData.avatar_url} alt="Profile Avatar" className="w-20 h-20 rounded-full mr-4" />
-          <div>
-            <p className="text-xl font-semibold">{userData.name}</p>
-            <p className="text-gray-500">@{userData.login}</p>
+      <h2 className="text-3xl font-bold mb-4">GitHub Portfolio</h2>
+      <form className="mb-4" onSubmit={handleSubmit}>
+        <label htmlFor="username" className="mr-2">
+          GitHub Username:
+        </label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={handleChange}
+          placeholder="Enter a GitHub username..."
+          className="border border-gray-300 rounded-md px-2 py-1"
+          required
+        />
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 ml-2 rounded-md">
+          Search
+        </button>
+      </form>
+
+      {userData && (
+        <div className="max-w-3xl mx-auto bg-white rounded-md shadow-md p-4 mb-4">
+          <div className="flex items-center mb-4">
+            <img src={userData.avatar_url} alt="User Avatar" className="w-12 h-12 rounded-full mr-2" />
+            <h3 className="text-xl font-semibold">{userData.name || userData.login}</h3>
           </div>
-        </div>
-        <p className="text-gray-700 mt-4">{userData.bio}</p>
-        <div className="flex mt-4">
-          <div className="mr-8">
-            <p className="font-semibold">{userData.followers}</p>
-            <p className="text-gray-500">Followers</p>
-          </div>
-          <div className="mr-8">
-            <p className="font-semibold">{userData.following}</p>
-            <p className="text-gray-500">Following</p>
-          </div>
-          <div>
-            <p className="font-semibold">{repoData.length}</p>
-            <p className="text-gray-500">Repositories</p>
-          </div>
-        </div>
-      </div>
-      <div className="repositories mb-8">
-        <h3 className="text-2xl font-bold mb-4">Repositories</h3>
-        {renderRepoCards()}
-      </div>
-      {repoData.length > 0 && (
-        <div className="statistics">
-          <h3 className="text-2xl font-bold mb-4">Statistics</h3>
-          {renderCommitChart()}
-          {renderCollaborationChart()}
-          {renderCommitGraph()}
-          {renderTimeSpentChart()}
-          {renderBadgeChart()}
+          <p>{userData.bio || 'No bio provided.'}</p>
+          <p className="text-gray-500">
+            <strong>Followers:</strong> {userData.followers} | <strong>Following:</strong> {userData.following}
+          </p>
+          <p>
+            <strong>Public Repositories:</strong> {userData.public_repos} | <strong>Public Gists:</strong> {userData.public_gists}
+          </p>
+          <p>
+            <strong>Location:</strong> {userData.location || 'Not specified'}
+          </p>
+          <p>
+            <strong>Member Since:</strong> {formatDistanceToNow(new Date(userData.created_at), { addSuffix: true })}
+          </p>
+          <p>
+            <strong>GitHub Profile:</strong>{' '}
+            <a href={userData.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+              {userData.html_url}
+            </a>
+          </p>
         </div>
       )}
-  
-      <div className="share-button">
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md"
-          
-        >
-          Generate Shareable Link
-        </button>
+
+      {repoData.length > 0 && (
+        <div>
+          {renderRepoCards()}
+          {renderCommitChart()}
+          {renderLanguageChart()}
         </div>
+      )}
+
+      {shareableLink && (
+        <div className="bg-white rounded-md shadow-md p-4">
+          <h4 className="text-xl font-semibold mb-2">Shareable Link</h4>
+          <input
+            type="text"
+            value={shareableLink}
+            readOnly
+            className="border border-gray-300 rounded-md px-2 py-1 w-full"
+          />
+        </div>
+      )}
     </div>
-    
   );
 };
 

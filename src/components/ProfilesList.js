@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, query, getDocs } from 'firebase/firestore';
 import ProfileCard from './ProfileCard';
 import { initializeApp } from 'firebase/app';
-// import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
 
 const ProfilesList = () => {
   const [profiles, setProfiles] = useState([]);
@@ -19,8 +18,7 @@ const ProfilesList = () => {
     measurementId: "G-XLD119ZCQY"
   };
 
-const app = initializeApp(firebaseConfig);
-// const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
 
   useEffect(() => {
     fetchProfiles();
@@ -29,9 +27,7 @@ const app = initializeApp(firebaseConfig);
   const fetchProfiles = async () => {
     const db = getFirestore(app);
     const profilesCollection = collection(db, 'users');
-    const profilesQuery = query(profilesCollection);
-
-    const querySnapshot = await getDocs(profilesQuery);
+    const querySnapshot = await getDocs(profilesCollection);
     const profilesData = querySnapshot.docs.map((doc) => doc.data());
     setProfiles(profilesData);
     setFilteredProfiles(profilesData);
@@ -53,41 +49,52 @@ const app = initializeApp(firebaseConfig);
     setFilteredProfiles(filteredProfiles);
   }, [filterTags, profiles]);
 
+  const handleConnect = (profile) => {
+    window.location.href = `/portfolio/${profile.username}`;
+  };
+
+  const handleUpvote = (profile) => {
+    console.log('Upvoting', profile.username);
+  };
+
+  const handleMessage = (profile) => {
+    // Handle message action for the profile
+    console.log('Messaging', profile.username);
+  };
+
+  const handleViewProfile = (profile) => {
+    // Handle view profile action for the profile
+    console.log('Viewing profile of', profile.username);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-wrap -mx-4">
         {filteredProfiles.map((profile) => (
-          <ProfileCard key={profile.username} profile={profile} />
+          <ProfileCard
+            key={profile.username}
+            profile={profile}
+            onConnect={() => handleConnect(profile)}
+            onUpvote={() => handleUpvote(profile)}
+            onMessage={() => handleMessage(profile)}
+            onViewProfile={() => handleViewProfile(profile)}
+          />
         ))}
       </div>
       <div className="mt-4">
         <h2 className="text-xl font-bold mb-2">Filter Profiles</h2>
         <div className="flex space-x-2">
-          <button
-            onClick={() => handleTagFilter('React')}
-            className={`px-4 py-2 rounded-full ${
-              filterTags.includes('React') ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'
-            }`}
-          >
-            React
-          </button>
-          <button
-            onClick={() => handleTagFilter('JavaScript')}
-            className={`px-4 py-2 rounded-full ${
-              filterTags.includes('JavaScript') ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'
-            }`}
-          >
-            JavaScript
-          </button>
-          <button
-            onClick={() => handleTagFilter('Node.js')}
-            className={`px-4 py-2 rounded-full ${
-              filterTags.includes('Node.js') ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'
-            }`}
-          >
-            Node.js
-          </button>
-          
+          {Array.from(new Set(profiles.flatMap((profile) => profile.techStack))).map((tag) => (
+            <button
+              key={tag}
+              onClick={() => handleTagFilter(tag)}
+              className={`px-4 py-2 rounded-full ${
+                filterTags.includes(tag) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
         </div>
       </div>
     </div>
