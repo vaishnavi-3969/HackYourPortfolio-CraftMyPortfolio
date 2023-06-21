@@ -22,9 +22,8 @@ const App = () => {
 
   return (
     <div>
-      <NavBar />
-      <div>
         <Router>
+     <NavBar />
           <Routes>
             <Route path='/' element={<Home />} exact />
             <Route path='/home' element={<Home/>} exact/>
@@ -49,7 +48,6 @@ const App = () => {
           </Routes>
         </Router>
       </div>
-    </div>
   );
 }
 
