@@ -64,7 +64,7 @@ const NavBar = () => {
               Learn
             </Link>
             <Link
-              to={}="/testimonials"
+              to="/testimonials"
               className="text-white hover:bg-green-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Testimonials
@@ -111,7 +111,7 @@ const NavBar = () => {
                     color="white"
                   />
                   {user.name}
-                </a>
+                </Link>
               </p>
             )}
             {isAuthenticated ? (
