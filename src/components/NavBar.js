@@ -1,11 +1,12 @@
-import React,{useState} from 'react';
-import { FaHome, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
-import { Button } from 'react-bootstrap';
-import { useAuth0 } from '@auth0/auth0-react';
-import './UserForm';
-import './Github';
-import UserForm from './UserForm';
-import Github from './Github';
+import React, { useState } from "react";
+import { FaHome, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { Button } from "react-bootstrap";
+import { useAuth0 } from "@auth0/auth0-react";
+import "./UserForm";
+import "./Github";
+import UserForm from "./UserForm";
+import Github from "./Github";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
@@ -32,80 +33,83 @@ const NavBar = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <a
-              href="/home"
+            <Link
+              to="/home"
               className="text-white hover:bg-blue-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Home
-            </a>
-            <a
-              href="/github"
+            </Link>
+            <Link
+              to="/github"
               className="text-white hover:bg-green-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
-            Try Generator
-            </a>
-            <a
+              Try Generator
+            </Link>
+            <Link
               href="/profilesList"
               className="text-white hover:bg-purple-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Connect
-            </a>
-            <a
-              href="/projects"
+            </Link>
+            <Link
+              to="/projects"
               className="text-white hover:bg-yellow-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Collaborate
-            </a>
-            <a
-              href="/learningResources"
+            </Link>
+            <Link
+              to="/learningResources"
               className="text-white hover:bg-blue-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Learn
-            </a>
-            <a
-              href="/testimonials"
+            </Link>
+            <Link
+              to={}="/testimonials"
               className="text-white hover:bg-green-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Testimonials
-            </a>
-            <a
-              href="/showcase"
+            </Link>
+            <Link
+              to="/showcase"
               className="text-white hover:bg-purple-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Events
-            </a>
-            <a
-              href="/progressTracker"
+            </Link>
+            <Link
+              to="/progressTracker"
               className="text-white hover:bg-yellow-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Progress Tracker
-            </a>
-            <a
-              href="/interactiveQuizzes"
+            </Link>
+            <Link
+              to="/interactiveQuizzes"
               className="text-white hover:bg-blue-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Quiz
-            </a>
-            <a
-              href="/resourceLibrary"
+            </Link>
+            <Link
+              to="/resourceLibrary"
               className="text-white hover:bg-green-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Library
-            </a>
-            <a
-              href="/communityForum"
+            </Link>
+            <Link
+              to="/communityForum"
               className="text-white hover:bg-purple-500 px-4 py-2 rounded-md text-base font-medium transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
             >
               Forum
-            </a>
-           {isAuthenticated && (
+            </Link>
+            {isAuthenticated && (
               <p>
-                <a
-                  href="/userform"
+                <Link
+                  to="/userform"
                   className="text-white hover:text-blue-200"
                   onClick={handleUserFormClick}
                 >
-                  <FaUserCircle className="nav-icon inline-block mr-1" color='white'/>
+                  <FaUserCircle
+                    className="nav-icon inline-block mr-1"
+                    color="white"
+                  />
                   {user.name}
                 </a>
               </p>
